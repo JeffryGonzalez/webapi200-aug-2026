@@ -1,0 +1,21 @@
+# Build output
+bin/
+obj/
+
+# Rider / JetBrains
+.idea/
+*.iml
+*.sln.iml
+_ReSharper*/
+*.DotSettings.user
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store

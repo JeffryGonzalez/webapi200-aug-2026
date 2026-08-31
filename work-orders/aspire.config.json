@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "WorkOrders.AppHost/WorkOrders.AppHost.csproj"
+  }
+}
