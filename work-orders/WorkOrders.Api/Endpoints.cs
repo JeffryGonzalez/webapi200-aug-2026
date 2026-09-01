@@ -54,24 +54,32 @@ public static class Endpoints
 
             var vendor = await catalog.FindVendorAsync(request.Vendor, token);
             if (vendor is null)
+            {
                 return Results.Problem(statusCode: 422,
                     title: $"'{request.Vendor}' is not a registered vendor");
+            }
 
             var standing = await catalog.GetStandingAsync(vendor.Id, token);
             if (standing is null)
+            {
                 return Results.Problem(statusCode: 422,
                     title: $"No standing on record for {vendor.Name}");
+            }
 
             if (standing.Status is not "approved")
+            {
                 return Results.Problem(statusCode: 422, 
                     title: $"{vendor.Name} is {standing.Status}",
                     detail: $"Effective {standing.EffectiveDate}. {standing.Reason}");
+            }
 
             var order = await session.Query<WorkOrder>()
                 .FirstOrDefaultAsync(w => w.Number == number, token);
              
             if (order is null)
+            {
                 return Results.Problem(statusCode: 404, title: "No such work order");
+            }
 
             order.DispatchedTo = request.Vendor;
             order.DispatchedOn = DateOnly.FromDateTime(DateTime.UtcNow);

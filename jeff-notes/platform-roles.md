@@ -17,4 +17,6 @@
 
 
 Venues is sort of a Jeff invention - but man it really helps. Most viral programming thing I've ever created.
+curl -s "http://localhost:5181/work-orders?page=1&department=STR"
+
 

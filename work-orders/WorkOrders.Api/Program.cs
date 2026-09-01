@@ -5,6 +5,7 @@ using WorkOrders.Api;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
+builder.AddNpgsqlDataSource("workorders");
 
 // Enums go over the wire as lowercase kebab strings — "website-form", "dispatched" —
 // matching the purchasing catalog, which callers of this service also call.
@@ -16,8 +17,9 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 builder.Services.AddMarten((StoreOptions options) =>
     {
-        options.Connection(builder.Configuration.GetConnectionString("workorders")!);
+        
     })
+    .UseNpgsqlDataSource()
     .UseLightweightSessions()
     .InitializeWith(new WorkOrderSeed());
 

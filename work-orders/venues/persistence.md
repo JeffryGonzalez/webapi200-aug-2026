@@ -1,6 +1,6 @@
 # Persistence
 
-Reference: https://martendb.io
+Reference: https://martendb.io (IDocumentSession comes from here)
 
 Everything below is where we **differ from what a developer who has used an ORM would
 assume.** If you'd have guessed it, it isn't here.
