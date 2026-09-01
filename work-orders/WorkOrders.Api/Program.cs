@@ -22,7 +22,10 @@ builder.Services.AddMarten((StoreOptions options) =>
     .InitializeWith(new WorkOrderSeed());
 
 builder.Services.AddHostedService<MailboxAdapter>();
-
+builder.Services.AddHttpClient<PurchasingCatalog>(client =>
+{
+    client.BaseAddress = new Uri("https+http://catalog");
+});
 var app = builder.Build();
 app.MapDefaultEndpoints();
 
