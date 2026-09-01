@@ -1,0 +1,18 @@
+bin/
+obj/
+
+# Rider / JetBrains
+.idea/
+*.iml
+_ReSharper*/
+*.DotSettings.user
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# VS Code
+.vscode/
+
+.DS_Store
