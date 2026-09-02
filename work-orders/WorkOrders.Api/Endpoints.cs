@@ -44,6 +44,29 @@ public static class Endpoints
 
             return Results.Created($"/work-orders/{order.Number}", order);
         });
+        // The phone at Village Hall.
+        app.MapPost("/intake/phone", async (
+            PhoneCallReport report, IDocumentSession session, CancellationToken token) =>
+        {
+            var order = new WorkOrder
+            {
+                Id = Guid.CreateVersion7(), // Team Venue Decision here - same with date representations.
+                Number = await Numbering.NextAsync(session, token),
+                Channel = Channel.Phone,
+                Status = WorkOrderStatus.Open,
+                ReportedBy = string.IsNullOrWhiteSpace(report.ReportedBy)
+                    ? "caller did not give name"
+                    : report.ReportedBy,
+                Location = report.Location,
+                Description = report.Description,
+                ReportedOn = DateOnly.FromDateTime(DateTime.UtcNow) // my venue decision on dates and times.
+            };
+
+            session.Store(order);
+            await session.SaveChangesAsync(token);
+
+            return Results.Created($"/work-orders/{order.Number}", order);
+        });
 
         // Dispatch. Nothing here checks whether the vendor may be used.
         app.MapPost("/work-orders/{number}/dispatch", async (
@@ -95,3 +118,4 @@ public static class Endpoints
 
 public record WebsiteFormSubmission(string ReportedBy, string Location, string Description);
 public record DispatchRequest(string Vendor);
+public record PhoneCallReport(string? ReportedBy, string Location, string Description);

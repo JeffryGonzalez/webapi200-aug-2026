@@ -1,6 +1,7 @@
 <Project Sdk="Aspire.AppHost.Sdk/13.5.3">
 
   <ItemGroup>
+    <ProjectReference Include="..\AsyncProcessingDemos\AsyncProcessingDemos.csproj" />
     <ProjectReference Include="..\WorkOrders.Api\WorkOrders.Api.csproj" />
     <ProjectReference Include="..\WorkOrders.Routing\WorkOrders.Routing.csproj" />
     <ProjectReference Include="..\WorkOrders.Notifications\WorkOrders.Notifications.csproj" />

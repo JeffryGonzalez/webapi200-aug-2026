@@ -38,8 +38,8 @@ app.MapWorkOrders();
 // something to poll without an IMAP server in the room.
 app.MapPost("/intake/shared-mailbox/deliver", (MailboxMessage message) =>
 {
-    MailboxAdapter.Deliver(message);
-    return Results.Accepted();
+    MailboxAdapter.Deliver(message); // I sent your message for processing, won't make you wait..
+    return Results.Accepted(); // 202 - sort of passive aggressive "Fine".
 });
 
 app.Run();

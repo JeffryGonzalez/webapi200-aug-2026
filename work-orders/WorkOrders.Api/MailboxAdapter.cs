@@ -12,7 +12,9 @@ public class MailboxAdapter(IServiceProvider services, ILogger<MailboxAdapter> l
     : BackgroundService
 {
     // Stands in for the mailbox. A real one would be IMAP; this is the same shape.
-    private static readonly Queue<MailboxMessage> Inbox = new();
+    private static readonly Queue<MailboxMessage> Inbox = new(); // Queue is not thread-safe. 
+    // You should use either a ConcurrentQueue, use locking,  or a Channel for a real implementation.
+    // Channel is awesome - but still wouldn't use it for work like this.
 
     public static void Deliver(MailboxMessage message) => Inbox.Enqueue(message);
 
@@ -25,7 +27,7 @@ public class MailboxAdapter(IServiceProvider services, ILogger<MailboxAdapter> l
             if (Inbox.Count == 0) continue;
 
             var message = Inbox.Dequeue();
-            Inbox.Clear();
+            Inbox.Clear(); // Notice this - yuck. We'll talk about that. 
 
             await using var scope = services.CreateAsyncScope();
             var session = scope.ServiceProvider.GetRequiredService<IDocumentSession>();
